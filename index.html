@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>12</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #121F2A;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .popup {
+      position: absolute;
+      opacity: 0;
+      animation: float 2s ease-in-out infinite;
+      transition: opacity 0.5s ease;
+      cursor: default;
+      z-index: 1;
+    }
+
+    .popup-content {
+      text-align: center;
+      font-family: 'Noto Serif', serif;
+      font-size: 18px;
+      padding: 10px 15px;
+      display: inline-block;
+      white-space: nowrap;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      background-color: pink;
+      color: #8B0000;
+      transition: transform 0.2s ease;
+    }
+
+    .popup:hover .popup-content {
+      transform: scale(1.2);
+      z-index: 9999;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    
+    }
+
+.ribbon-popup {
+  position: absolute;
+  animation: float 2s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  cursor: default;
+  z-index: 1;
+}
+
+.ribbon-content {
+  font-size: 26px;
+  transition: transform 0.2s ease;
+}
+
+.ribbon-popup:hover .ribbon-content {
+  transform: scale(1.3);
+  z-index: 9999;
+}
+
+.image-popup {
+  position: absolute;
+  animation: float 2s ease-in-out infinite;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  cursor: default;
+  z-index: 1;
+}
+
+.image-popup img {
+  width: 200px;
+  height: auto;
+  transition: transform 0.2s ease;
+  border-radius: 15px;
+}
+
+.image-popup:hover img {
+  transform: scale(1.3);
+  z-index: 9999;
+}
+
+#start-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #121F2A;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Serif', serif;
+  z-index: 99999;
+  text-align: center;
+  gap: 12px;
+}
+
+#start-screen button {
+  font-size: 20px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: none;
+  background-color: #F4A3C2;
+  color: #8B0000;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+#start-screen button:hover {
+  transform: scale(1.1);
+}
+
+  </style>
+</head>
+<body>
+  <div id="start-screen">
+    <button onclick="startExperience()">Bắt đầu</button>
+  </div>
+
+  <video id="bg-music" src="nhu.mp4" preload="auto" loop style="display: none;"></video>
+<script>
+  const colors = [
+  "#FFE9F0", "#FFDEE9", "#F8C8DC", "#F4A3C2", "#F2A6BC"
+];
+
+
+  function createPopup(message) {
+    const popup = document.createElement('div');
+    popup.className = 'popup';
+
+    const content = document.createElement('div');
+    content.className = 'popup-content';
+    content.textContent = message;
+
+    const bgColor = colors[Math.floor(Math.random() * colors.length)];
+    content.style.backgroundColor = bgColor;
+
+    popup.appendChild(content);
+    document.body.appendChild(popup);
+
+    const popupWidth = popup.offsetWidth;
+    const popupHeight = popup.offsetHeight;
+    document.body.removeChild(popup);
+
+    const x = Math.floor(Math.random() * (window.innerWidth - popupWidth));
+    const y = Math.floor(Math.random() * (window.innerHeight - popupHeight));
+    popup.style.left = x + 'px';
+    popup.style.top = y + 'px';
+
+    document.body.appendChild(popup);
+    setTimeout(() => popup.style.opacity = '1', 10);
+  }
+
+  function createRibbonPopup() {
+  const cuteIcons = ['🎀', '💖', '🌸', '✨', '🫶'];
+  
+  const popup = document.createElement('div');
+  popup.className = 'ribbon-popup';
+
+  const content = document.createElement('div');
+  content.className = 'ribbon-content';
+  content.textContent = cuteIcons[Math.floor(Math.random() * cuteIcons.length)];
+
+  popup.appendChild(content);
+
+  const x = Math.random() * (window.innerWidth - 40);
+  const y = Math.random() * (window.innerHeight - 40);
+
+  popup.style.left = `${x}px`;
+  popup.style.top = `${y}px`;
+
+  document.body.appendChild(popup);
+  setTimeout(() => popup.style.opacity = '1', 10);
+}
+
+
+  function createImagePopup(src) {
+  const popup = document.createElement('div');
+  popup.className = 'image-popup';
+
+  const img = document.createElement('img');
+  img.src = src;
+
+  popup.appendChild(img);
+
+  const x = Math.random() * (window.innerWidth - 60);
+  const y = Math.random() * (window.innerHeight - 60);
+  popup.style.left = `${x}px`;
+  popup.style.top = `${y}px`;
+
+  document.body.appendChild(popup);
+  setTimeout(() => popup.style.opacity = '1', 10);
+  }
+  function startExperience() {
+  document.getElementById("start-screen").style.display = "none";
+
+  const music = document.getElementById("bg-music");
+  music.play();
+  }
+ 
+
+  const popupInterval = setInterval(() => {
+  createPopup("Chúc Đan Như thi tốt nhé");
+  setTimeout(() => createPopup("I trust youuu"), 100);
+  setTimeout(() => createPopup("Cố lên nhaaa"), 200);
+  setTimeout(() => createPopup("Bình tĩnh tự tin làm bài nhe"), 300);
+  setTimeout(() => createPopup("Ngủ ngon nhóoo"), 400);
+  setTimeout(() => createPopup("Proud of you so muchhh"), 500);
+  setTimeout(() => createPopup("Điểm cao có quàaaa"), 600);
+  setTimeout(() => createPopup("Lụi đâu trúng đóoo"), 700);
+  setTimeout(() => createPopup("10đ nhóoo"), 800);
+  setTimeout(() => createPopup("Good luck to you"), 900);
+  setTimeout(() => createPopup("+1 máy THỦ KHOA nhoooo"), 900);
+  setTimeout(() => createPopup("*ôm ôm*"), 800);
+  for (let i = 0; i < 5; i++) {
+  setTimeout(() => createRibbonPopup(), i * 140); // mỗi 150ms gọi 1 icon
+}
+  setTimeout(() => createImagePopup("https://v-nhu.github.io/12/nhu.jpg"), 650);
+  }, 1600); // 2 giây lặp lại toàn bộ chuỗi
+</script>
+</body>
+</html>
+
